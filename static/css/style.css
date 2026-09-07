@@ -188,8 +188,8 @@ h1, .brand {
 }
 
 .avatar:hover {
-    transform: scale(1.03) translateY(-5px); /* Foto sedikit membesar dan naik */
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2); /* Menambahkan bayangan saat disorot */
+    transform: scale(1.03) translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
 }
 
 .site-footer {
@@ -200,6 +200,7 @@ h1, .brand {
     background-color: #FEFAE0;
 }
 
+/* Responsive style untuk mobile */
 @media (max-width: 600px) {
     .hero-grid {
         grid-template-columns: 1fr;
@@ -345,3 +346,4 @@ h1, .brand {
 .card-item-skill .card-body img:hover {
     transform: scale(1.1);
 }
+
