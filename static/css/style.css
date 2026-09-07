@@ -17,7 +17,7 @@
 body {
     font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: var(--ink);
-    background-color: var(--paper);
+    background: linear-gradient(135deg, #FEFAE0, #E3D9C9,  #C7D3B0);
     line-height: 1.6;
 }
 
@@ -192,4 +192,67 @@ h1, .brand {
     .social-links {
         justify-content: flex-start;
     }
+}
+
+.card-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+}
+
+.card-item {
+    width: 350px;
+}
+
+.card-list .card-item .card-link {
+    width: 100%;
+    height: 350px;
+    display: block;
+    background: #e3d9c9;
+    padding: 18px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    text-decoration: none;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
+    transition: 0.2s ease;
+}
+
+.card-list .card-item .card-link:hover{
+    border-color: #3E2723;
+}
+
+.card-list .card-link .card-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto;
+}
+
+.card-list .card-link .badge {
+    color: #645e08;
+    padding: 8px 16px;
+    font-size: 0.80rem ;
+    font-weight: 500;
+    margin: 10px auto;
+    background: #c5bc58;
+    width: fit-content;
+    border-radius: 50px;
+}
+
+h2.experience {
+    margin: 32px auto 32px;
+    text-align: center;
+}
+
+.card-list .card-link .card-title {
+    font-size: 1.05rem;
+    color: #674636;
+    font-weight: 800;
+    text-align: center;
+    margin: 5px auto;
 }
