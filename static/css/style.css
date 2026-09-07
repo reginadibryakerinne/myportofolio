@@ -17,22 +17,31 @@
 body {
     font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: var(--ink);
-    background: linear-gradient(135deg, #FEFAE0, #E3D9C9,  #C7D3B0);
+    background-image: url('/static/img/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     line-height: 1.6;
 }
 
+.site-header {
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    background-color: #FEFAE0;
+    z-index: 9999;
+    font-family: "Fraunces", serif;
+}
+
 h1, .brand {
-    font-family: "Space Grotesk", -apple-system, sans-serif;
+    font-family: "Rubik Mono One", -apple-system, sans-serif;
+    color: #ffffff;
 }
 
 .container {
     max-width: 960px;
     margin: 0 auto;
     padding: 0 1.5rem;
-}
-
-.site-header {
-    border-bottom: 1px solid var(--line);
 }
 
 .site-header .container {
@@ -47,6 +56,7 @@ h1, .brand {
     font-weight: 700;
     color: var(--ink);
     text-decoration: none;
+    font-family: "Fraunces", serif;
 }
 
 .site-header nav {
@@ -85,9 +95,10 @@ h1, .brand {
     font-size: 0.85rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--accent-dark);
+    color: #E8D77A;
     font-weight: 700;
     margin-bottom: 0.75rem;
+    font-family: "Cormorant Garamond", -apple-system, sans-serif;
 }
 
 .hero-identity h1 {
@@ -96,9 +107,11 @@ h1, .brand {
 }
 
 .bio {
-    color: var(--text-muted);
+    color: #E8D77A;
     max-width: 480px;
     margin-bottom: 1.5rem;
+    font-family: "Fraunces", serif;
+
 }
 
 .meta-list {
@@ -109,29 +122,33 @@ h1, .brand {
 
 .meta-row dt {
     font-size: 0.75rem;
+    font-family: "Cormorant Garamond", -apple-system, sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--text-muted);
+    color: #FEFAE0;
     margin-bottom: 0.15rem;
 }
 
 .meta-row dd {
     font-weight: 600;
+    font-family: "Cormorant Garamond", -apple-system, sans-serif;
+    color:#E3D9C9;
 }
 
 .social-links {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
+    font-family: "Cormorant Garamond", serif;
 }
 
 .social-link {
     display: inline-block;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 600;
     text-decoration: none;
-    color: var(--paper);
-    background-color: var(--ink);
+    color: #3E2723;
+    background-color: #C5BC58;
     border-radius: var(--radius);
     padding: 0.5rem 1.1rem;
     transition: background-color 0.2s ease;
@@ -153,7 +170,7 @@ h1, .brand {
     left: 1.25rem;
     width: 100%;
     height: 100%;
-    background-color: var(--accent);
+    background-color: #3F4B32;
     border-radius: var(--radius);
     z-index: 0;
 }
@@ -166,16 +183,24 @@ h1, .brand {
     aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: var(--radius);
-    border: 3px solid var(--ink);
+    border: 3px solid #C7D3B0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.avatar:hover {
+    transform: scale(1.03) translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
 }
 
 .site-footer {
     padding: 1.5rem;
-    color: var(--text-muted);
+    color: #3E2723 ;
     font-size: 0.85rem;
     border-top: 1px solid var(--line);
+    background-color: #FEFAE0;
 }
 
+/* Responsive style untuk mobile */
 @media (max-width: 600px) {
     .hero-grid {
         grid-template-columns: 1fr;
@@ -194,6 +219,7 @@ h1, .brand {
     }
 }
 
+/* Styling untuk Section Experience */
 .card-list {
     list-style: none;
     padding: 0;
@@ -211,7 +237,7 @@ h1, .brand {
     width: 100%;
     height: 350px;
     display: block;
-    background: #e3d9c9;
+    background: #C7D3B0;
     padding: 18px;
     border-radius: 12px;
     border: 2px solid transparent;
@@ -231,22 +257,26 @@ h1, .brand {
     border-radius: 10px;
     display: block;
     margin: 0 auto;
+    border: 2px solid #3F4B32;
 }
 
 .card-list .card-link .badge {
-    color: #645e08;
+    color: #E8D77A;
     padding: 8px 16px;
     font-size: 0.80rem ;
     font-weight: 500;
     margin: 10px auto;
-    background: #c5bc58;
+    background: #3E2723;
     width: fit-content;
     border-radius: 50px;
+    font-family: "Fraunces", serif;
 }
-
-h2.experience {
+.experience, .skill {
     margin: 32px auto 32px;
     text-align: center;
+    font-family: "Rubik Mono One", -apple-system, sans-serif;
+    color: #C7D3B0;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4)
 }
 
 .card-list .card-link .card-title {
@@ -255,4 +285,65 @@ h2.experience {
     font-weight: 800;
     text-align: center;
     margin: 5px auto;
+    font-family: "Cormorant Garamond", serif;
 }
+
+/* Styling untuk Section Skills */
+#skill .card-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.card-item-skill {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #C5BC58;
+}
+
+.card-item-skill .card-header {
+    background-color: #3E2723;
+    color: #E8D77A;
+    text-align: center;
+    padding: 12px 20px;
+    font-weight: 700;
+    font-size: 1rem;
+    font-family: "Fraunces", serif;
+    text-shadow: none;
+}
+
+.card-item-skill .card-body {
+    background : linear-gradient(90deg, #E3D9C9, #FEFAE0);
+    color: #3F4B32;
+    text-align: center;
+    padding: 16px 24px;
+    font-size: 1rem;
+    line-height: 1.5;
+    font-family: "Baskervville", serif;
+    text-shadow: none;
+    font-weight: 600
+}
+
+.card-item-skill .card-body:has(img) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    padding: 22px 24px;
+}
+
+.card-item-skill .card-body img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+}
+
+.card-item-skill .card-body img:hover {
+    transform: scale(1.1);
+}
+
