@@ -33,6 +33,10 @@ h1, .brand {
 
 .site-header {
     border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    background-color: #A9B388;
+    z-index: 1000;
 }
 
 .site-header .container {
@@ -243,8 +247,7 @@ h1, .brand {
     width: fit-content;
     border-radius: 50px;
 }
-
-h2.experience {
+.experience, .skill {
     margin: 32px auto 32px;
     text-align: center;
 }
@@ -255,4 +258,58 @@ h2.experience {
     font-weight: 800;
     text-align: center;
     margin: 5px auto;
+}
+
+#skill .card-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.card-item-skill {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--line);
+}
+
+.card-item-skill .card-header {
+    background-color: var(--ink);
+    color: var(--paper);
+    text-align: center;
+    padding: 12px 20px;
+    font-weight: 700;
+    font-size: 1rem;
+    font-family: "Space Grotesk", sans-serif;
+}
+
+.card-item-skill .card-body {
+    background-color: #f4f0eb;
+    color: var(--ink);
+    text-align: center;
+    padding: 16px 24px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.card-item-skill .card-body:has(img) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    padding: 22px 24px;
+}
+
+.card-item-skill .card-body img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+}
+
+.card-item-skill .card-body img:hover {
+    transform: scale(1.1);
 }
