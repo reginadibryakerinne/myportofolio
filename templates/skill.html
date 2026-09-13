@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Experience -{{ name }}</title>
+    <title>Skills -{{ name }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -26,36 +26,30 @@
     </header>
 
     <main>
-        <section class="experience-section" id="experience">
+        <section class="skill-section" id="skill">
             <div class="container">
-                <p class="section-kicker">Perjalanan saya sejauh ini</p>
-                <h1>Experience</h1>
+                <p class="section-kicker"></p>
+                <h1>Skills & Tools</h1>
 
-                <div class="experience-grid">
-                    {% for experience in experience_list %}
-                        <article class="experience-card">
+                <div class="skill-grid">
+                    {% for skill in skill_list %}
+                        <article class="skill-card">
 
-                            {% if experience.thumbnail %}
-                            <img class="experience-thumbnail" src="{{ experience.thumbnail }}" alt="{{ experience.title }}">
+                            {% if skill.thumbnail %}
+                            <img class="skill-thumbnail" src="{{ skill.thumbnail }}" alt="{{ skill.title }}">
                              {% endif %}
                              
-                            <span class="experience-category">
-                                {{ experience.get_category_display }}
+                            <span class="skill">
+                                {{ skill.get_category_display }}
                             </span>
-                            <h2>{{ experience.title }}</h2>
-                            <p class="experience-description" style="white-space: pre-line;">
-                                {{ experience.description }}
+                            <h2>{{ skill.title }}</h2>
+                            <p class="skill-description" style="white-space: pre-line;">
+                                {{ skill.description }}
                             </p>
-
-                            {% if experience.is_ongoing %}
-                                <p class="experience-status">Sedang berlangsung</p>
-                            {% else %}
-                                <p class="experience-status">Selesai</p>
-                            {% endif %}
                         </article>
                     {% empty %}
                         <p class="empty-state">
-                            Belum ada pengalaman yang ditambahkan.
+                            Belum ada skill yang ditambahkan.
                         </p>
                     {% endfor %}
                 </div>

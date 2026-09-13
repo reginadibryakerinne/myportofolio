@@ -22,6 +22,13 @@ body {
     background-size: cover;
     background-position: center;
     line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1 0 auto;
 }
 
 .site-header {
@@ -111,7 +118,6 @@ h1, .brand {
     max-width: 480px;
     margin-bottom: 1.5rem;
     font-family: "Fraunces", serif;
-
 }
 
 .meta-list {
@@ -198,6 +204,7 @@ h1, .brand {
     font-size: 0.85rem;
     border-top: 1px solid var(--line);
     background-color: #FEFAE0;
+    flex-shrink: 0;
 }
 
 /* Responsive style untuk mobile */
@@ -217,65 +224,6 @@ h1, .brand {
     .social-links {
         justify-content: flex-start;
     }
-}
-
-/* Styling untuk Section Skills */
-#skill .card-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-.card-item-skill {
-    width: 100%;
-    max-width: 700px;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    border: 1px solid #C5BC58;
-}
-
-.card-item-skill .card-header {
-    background-color: #3E2723;
-    color: #E8D77A;
-    text-align: center;
-    padding: 12px 20px;
-    font-weight: 700;
-    font-size: 1rem;
-    font-family: "Fraunces", serif;
-    text-shadow: none;
-}
-
-.card-item-skill .card-body {
-    background : linear-gradient(90deg, #E3D9C9, #FEFAE0);
-    color: #3F4B32;
-    text-align: center;
-    padding: 16px 24px;
-    font-size: 1rem;
-    line-height: 1.5;
-    font-family: "Baskervville", serif;
-    text-shadow: none;
-    font-weight: 600
-}
-
-.card-item-skill .card-body:has(img) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 32px;
-    padding: 22px 24px;
-}
-
-.card-item-skill .card-body img {
-    width: 42px;
-    height: 42px;
-    object-fit: contain;
-    transition: transform 0.2s ease;
-}
-
-.card-item-skill .card-body img:hover {
-    transform: scale(1.1);
 }
 
 /*style untuk experience html*/
@@ -324,8 +272,6 @@ h1, .brand {
     flex-direction: column;
     height: 100%;
     box-sizing: border-box;
-    
-
 }
 
 .experience-card:hover {
@@ -354,7 +300,6 @@ h1, .brand {
 .experience-card h2 {
     margin: 0.5rem 0;
     font-size: 1.25rem;
-    min-height: 4.5rem;
 }
 
 .experience-description,
@@ -374,3 +319,75 @@ h1, .brand {
     font-weight: 600;
 }
 
+/* Styling untuk Skill html */
+#skill-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.skill-section h1 {
+    margin: 0 0 1.5rem;
+    font-size: 2rem;
+    font-family: "Rubik Mono One", -apple-system, sans-serif;
+    color: #ffffff;
+    font-size: 1.7rem;
+    text-align: center;
+}
+
+.skill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+}
+.skill-card {
+    padding: 1.25rem;
+    background-color: #E3D9C9;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+    text-decoration: none;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
+    transition: 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    box-sizing: border-box;
+}
+
+.skill-card:hover {
+    border-color: #3E2723;
+    background-color: #D8CCBA;
+}
+
+.skill-thumbnail{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto;
+    border: 2px solid #3E2723;
+}
+
+.skill-card h2 {
+    margin: 0.5rem 0;
+    font-size: 1.25rem;
+}
+
+.skill-description,
+.empty-state {
+    color: #3F4B32;
+    font-weight: 500;
+    font-family: "Cormorant Garamond", -apple-system, sans-serif;
+    margin: 0;
+    height: auto;
+    overflow: visible;
+}
+
+.skill-status {
+    margin-top: auto;
+    padding-top: 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
