@@ -227,6 +227,7 @@ h1, .brand {
 }
 
 /*style untuk experience html*/
+
 .experience-section {
     padding: 4rem 0;
     border-top: 1px solid var(--line);
@@ -320,6 +321,7 @@ h1, .brand {
 }
 
 /* Styling untuk Skill html */
+
 #skill-section {
     display: flex;
     flex-direction: column;
