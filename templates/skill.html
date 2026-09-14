@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ name }} - Portfolio</title>
+    <title>Skills -{{ name }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
-
+    
 </head>
 <body>
     <header class="site-header">
@@ -27,37 +27,36 @@
     </header>
 
     <main>
-        <section class="hero" id="profile">
-            <div class="profile-box">
-                <div class="hero-grid">
-                    <div class="hero-identity">
-                        <p class="hero-kicker">Information System &middot; Universitas Indonesia</p>
-                        <h1>{{ name }}</h1>
-                    </div>
-                    <div class="hero-photo">
-                        <div class="photo-block"></div>
-                        <img class="avatar" src="/static/img/regina.png" alt="Photo of {{ name }}">
-                    </div>
-                    <div class="hero-details">
-                        <p class="bio">{{ bio }}</p>
-                        <dl class="meta-list">
-                            <div class="meta-row">
-                                <dt>NPM</dt>
-                                <dd>{{ npm }}</dd>
-                            </div>
-                            <div class="meta-row">
-                                <dt>Program</dt>
-                                <dd>{{ study_program }}</dd>
-                            </div>
-                         </dl>
-                        <div class="social-links">
-                            <a href="https://github.com/reginadibryakerinne" class="social-link">GitHub</a>
-                            <a href="https://www.linkedin.com/in/reginakerinne" class="social-link">LinkedIn</a>
-                            <a href="mailto:reginakerinne33@gmail.com" class="social-link">Email</a>
-                        </div>
+        <section class="skill-section" id="skill">
+            <div class="section-header-box">
+                <div class="container">
+                    <p class="section-kicker"></p>
+                    <h1>Skills</h1>
+
+                    <div class="skill-grid">
+                        {% for skill in skill_list %}
+                            <article class="skill-card">
+
+                                {% if skill.thumbnail %}
+                                <img class="skill-thumbnail" src="{{ skill.thumbnail }}" alt="{{ skill.title }}">
+                                {% endif %}
+                                
+                                <span class="skill">
+                                    {{ skill.get_category_display }}
+                                </span>
+                                <h2>{{ skill.title }}</h2>
+                                <p class="skill-description" style="white-space: pre-line;">
+                                    {{ skill.description }}
+                                </p>
+                            </article>
+                        {% empty %}
+                            <p class="empty-state">
+                                Belum ada skill yang ditambahkan.
+                            </p>
+                        {% endfor %}
                     </div>
                 </div>
-            </div>
+            </div>   
         </section>
     </main>
 
