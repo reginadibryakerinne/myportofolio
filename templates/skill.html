@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    
 </head>
 <body>
     <header class="site-header">
@@ -27,33 +28,35 @@
 
     <main>
         <section class="skill-section" id="skill">
-            <div class="container">
-                <p class="section-kicker"></p>
-                <h1>Skills & Tools</h1>
+            <div class="section-header-box">
+                <div class="container">
+                    <p class="section-kicker"></p>
+                    <h1>Skills</h1>
 
-                <div class="skill-grid">
-                    {% for skill in skill_list %}
-                        <article class="skill-card">
+                    <div class="skill-grid">
+                        {% for skill in skill_list %}
+                            <article class="skill-card">
 
-                            {% if skill.thumbnail %}
-                            <img class="skill-thumbnail" src="{{ skill.thumbnail }}" alt="{{ skill.title }}">
-                             {% endif %}
-                             
-                            <span class="skill">
-                                {{ skill.get_category_display }}
-                            </span>
-                            <h2>{{ skill.title }}</h2>
-                            <p class="skill-description" style="white-space: pre-line;">
-                                {{ skill.description }}
+                                {% if skill.thumbnail %}
+                                <img class="skill-thumbnail" src="{{ skill.thumbnail }}" alt="{{ skill.title }}">
+                                {% endif %}
+                                
+                                <span class="skill">
+                                    {{ skill.get_category_display }}
+                                </span>
+                                <h2>{{ skill.title }}</h2>
+                                <p class="skill-description" style="white-space: pre-line;">
+                                    {{ skill.description }}
+                                </p>
+                            </article>
+                        {% empty %}
+                            <p class="empty-state">
+                                Belum ada skill yang ditambahkan.
                             </p>
-                        </article>
-                    {% empty %}
-                        <p class="empty-state">
-                            Belum ada skill yang ditambahkan.
-                        </p>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
+            </div>   
         </section>
     </main>
 

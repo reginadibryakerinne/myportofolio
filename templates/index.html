@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <header class="site-header">
@@ -27,31 +28,33 @@
 
     <main>
         <section class="hero" id="profile">
-            <div class="container hero-grid">
-                <div class="hero-identity">
-                    <p class="hero-kicker">Infomartion System &middot; Universitas Indonesia</p>
-                    <h1>{{ name }}</h1>
-                </div>
-                <div class="hero-photo">
-                    <div class="photo-block"></div>
-                    <img class="avatar" src="/static/img/regina.png" alt="Photo of {{ name }}">
-                </div>
-                <div class="hero-details">
-                    <p class="bio">{{ bio }}</p>
-                    <dl class="meta-list">
-                        <div class="meta-row">
-                            <dt>NPM</dt>
-                            <dd>{{ npm }}</dd>
+            <div class="profile-box">
+                <div class="hero-grid">
+                    <div class="hero-identity">
+                        <p class="hero-kicker">Information System &middot; Universitas Indonesia</p>
+                        <h1>{{ name }}</h1>
+                    </div>
+                    <div class="hero-photo">
+                        <div class="photo-block"></div>
+                        <img class="avatar" src="/static/img/regina.png" alt="Photo of {{ name }}">
+                    </div>
+                    <div class="hero-details">
+                        <p class="bio">{{ bio }}</p>
+                        <dl class="meta-list">
+                            <div class="meta-row">
+                                <dt>NPM</dt>
+                                <dd>{{ npm }}</dd>
+                            </div>
+                            <div class="meta-row">
+                                <dt>Program</dt>
+                                <dd>{{ study_program }}</dd>
+                            </div>
+                         </dl>
+                        <div class="social-links">
+                            <a href="https://github.com/reginadibryakerinne" class="social-link">GitHub</a>
+                            <a href="https://www.linkedin.com/in/reginakerinne" class="social-link">LinkedIn</a>
+                            <a href="mailto:reginakerinne33@gmail.com" class="social-link">Email</a>
                         </div>
-                        <div class="meta-row">
-                            <dt>Program</dt>
-                            <dd>{{ study_program }}</dd>
-                        </div>
-                    </dl>
-                    <div class="social-links">
-                        <a href="https://github.com/reginadibryakerinne" class="social-link">GitHub</a>
-                        <a href="https://www.linkedin.com/in/reginakerinne" class="social-link">LinkedIn</a>
-                        <a href="mailto:reginakerinne33@gmail.com" class="social-link">Email</a>
                     </div>
                 </div>
             </div>

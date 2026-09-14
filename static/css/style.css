@@ -5,22 +5,19 @@
 }
 
 :root {
-    --ink: #674636;
-    --paper: #FEFAE0;
-    --accent: #A9B388;
-    --accent-dark: #5F6F52;
+    --ink: #f7f6e4;
+    --paper: #D4C4AB;
+    --accent: #253929;
+    --accent-dark: #774D31;
     --line: #e3d9c9;
-    --text-muted: #B99470;
+    --text-muted: linear-gradient(180deg, #03140E,#027556, #022C22);
     --radius: 5px;
 }
 
 body {
     font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: var(--ink);
-    background-image: url('/static/img/background.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    background-color: var(--paper) ;
     line-height: 1.6;
     display: flex;
     flex-direction: column;
@@ -32,17 +29,25 @@ main {
 }
 
 .site-header {
-    border-bottom: 1px solid var(--line);
+    border-radius: 40px;
+    margin: 20px auto 0 auto;
+    width: 95%; 
+    max-width: 1200px;
     position: sticky;
     top: 0;
-    background-color: #FEFAE0;
+    background-color: var(--accent);
     z-index: 9999;
     font-family: "Fraunces", serif;
+    color: var(--ink);
+
 }
 
 h1, .brand {
     font-family: "Rubik Mono One", -apple-system, sans-serif;
-    color: #ffffff;
+    background: var(--text-muted);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
 }
 
 .container {
@@ -81,6 +86,18 @@ h1, .brand {
     padding: 4.5rem 0 5rem;
 }
 
+.profile-box {
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: var(--ink);
+    border-radius: 10px;
+    padding: 2rem 2.5rem;
+    box-shadow: 
+        0 0 20px 5px rgba(119, 77, 49, 0.5),
+        0 0 60px 20px rgba(119, 77, 49, 0.25);
+}
+
 .hero-grid {
     display: grid;
     grid-template-columns: 1.3fr 1fr;
@@ -102,7 +119,7 @@ h1, .brand {
     font-size: 0.85rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #E8D77A;
+    color: var(--accent-dark);
     font-weight: 700;
     margin-bottom: 0.75rem;
     font-family: "Cormorant Garamond", -apple-system, sans-serif;
@@ -114,7 +131,7 @@ h1, .brand {
 }
 
 .bio {
-    color: #E8D77A;
+    color: var(--accent-dark);
     max-width: 480px;
     margin-bottom: 1.5rem;
     font-family: "Fraunces", serif;
@@ -131,14 +148,14 @@ h1, .brand {
     font-family: "Cormorant Garamond", -apple-system, sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #FEFAE0;
+    color: var(--accent);
     margin-bottom: 0.15rem;
 }
 
 .meta-row dd {
     font-weight: 600;
     font-family: "Cormorant Garamond", -apple-system, sans-serif;
-    color:#E3D9C9;
+    color: var(--accent);
 }
 
 .social-links {
@@ -153,8 +170,8 @@ h1, .brand {
     font-size: 0.9rem;
     font-weight: 600;
     text-decoration: none;
-    color: #3E2723;
-    background-color: #C5BC58;
+    color: var(--ink);
+    background-color: var(--accent);
     border-radius: var(--radius);
     padding: 0.5rem 1.1rem;
     transition: background-color 0.2s ease;
@@ -172,13 +189,15 @@ h1, .brand {
 
 .photo-block {
     position: absolute;
-    top: 1.25rem;
-    left: 1.25rem;
     width: 100%;
     height: 100%;
-    background-color: #3F4B32;
-    border-radius: var(--radius);
+    background-color: var(--accent);
+    border-radius: 50%;
     z-index: 0;
+    border-radius: 50%;
+    box-shadow: 
+        0 0 20px 5px rgba(63, 75, 50, 0.6),
+        0 0 50px 15px rgba(63, 75, 50, 0.3);
 }
 
 .avatar {
@@ -188,8 +207,8 @@ h1, .brand {
     width: 100%;
     aspect-ratio: 1 / 1;
     object-fit: cover;
-    border-radius: var(--radius);
-    border: 3px solid #C7D3B0;
+    border-radius: 50%;
+    border: 3px solid var(--paper);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -200,11 +219,242 @@ h1, .brand {
 
 .site-footer {
     padding: 1.5rem;
-    color: #3E2723 ;
+    color: var(--ink) ;
     font-size: 0.85rem;
     border-top: 1px solid var(--line);
-    background-color: #FEFAE0;
+    background-color: var(--accent);
     flex-shrink: 0;
+}
+
+/*style untuk experience html*/
+
+.experience-section {
+    padding: 4rem 0;
+}
+
+.section-header-box {
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: var(--ink);
+    border-radius: 10px;
+    padding: 2rem 2.5rem;
+    box-shadow: 
+        0 0 20px 5px rgba(119, 77, 49, 0.5),
+        0 0 60px 20px rgba(119, 77, 49, 0.25);
+}
+
+.section-kicker {
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--accent-dark);
+    margin-bottom: 0.5rem;
+    font-family: "Fraunces", serif;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    width: 100%;
+    padding: 0 2rem;
+}
+
+.experience-section h1 {
+    margin: 0 0 1.5rem;
+    font-family: "Rubik Mono One", -apple-system, sans-serif;
+    background: var(--text-muted);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-align: center;
+}
+
+.experience-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.experience-card {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.5rem;
+    background: var(--accent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    transition: 0.2s ease;
+}
+
+.experience-card:hover {
+    background: color-mix(in srgb, var(--ink) 70%, transparent);
+}
+
+.experience-category {
+    color: var(--ink);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    min-height: 1.2rem;
+}
+
+.experience-thumbnail,
+.experience-poster img {
+    width: 200px;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+    border: none;
+}
+
+.experience-divider {
+    border: none;
+    border-top: 2px solid rgba(255, 255, 255, 0.5);
+    margin-bottom: 1rem;
+    width: 60px;
+}
+
+.experience-description,
+.empty-state {
+    color: var(--ink);
+    font-weight: 500;
+    font-family: "Cormorant Garamond", -apple-system, sans-serif;
+    margin: 0;
+    height: auto;
+    overflow: hidden;
+    margin: 0 0 auto;
+}
+
+.experience-status {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 80px;   
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 1rem;
+}
+
+.experience-card:hover .experience-category,
+.experience-card:hover h2,
+.experience-card:hover .experience-description,
+.experience-card:hover .experience-status {
+    color:var(--accent);
+    transition: color 0.2s ease;
+}
+
+.experience-card:hover .experience-status{
+    border: 2px solid var(--accent);
+}
+
+/* Styling untuk Skill html */
+
+.skill-section {
+    padding: 4rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.skill-section h1 {
+    margin: 0 0 1.5rem;
+    font-family: "Rubik Mono One", -apple-system, sans-serif;
+    background: var(--text-muted);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-align: center;
+}
+
+.skill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    counter-reset: skill-counter;
+}
+
+.skill-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 0.6rem;
+    padding: 1.75rem;
+    background: var(--accent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    transition: 0.2s ease;
+    counter-increment: skill-counter;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.skill-card:hover {
+    background: color-mix(in srgb, var(--ink) 70%, transparent);
+}
+
+.skill-thumbnail {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    display: block;
+    margin: 0;
+    filter: brightness(0) invert(1);
+}
+
+.skill-card .skill {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 0.6;
+}
+
+.skill-card h2 {
+    margin: 0;
+    font-size: 1.15rem;
+    line-height: 1.2;
+    color: var(--ink);
+    font-family: "Fraunces", serif;
+}
+
+.skill-description,
+.empty-state {
+    color: var(--ink);
+    opacity: 0.85;
+    font-weight: 500;
+    font-family: "Cormorant Garamond", -apple-system, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+    width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.skill-card:hover {
+    background: color-mix(in srgb, var(--ink) 70%, transparent);
+}
+
+.skill-card:hover .skill-category,
+.skill-card:hover h2,
+.skill-card:hover .skill-description,
+.skill-card:hover .experience-status {
+    color:var(--accent);
+    transition: color 0.2s ease;
+}
+
+.skill-card:hover .skill-thumbnail {
+    filter: brightness(0);
 }
 
 /* Responsive style untuk mobile */
@@ -224,172 +474,52 @@ h1, .brand {
     .social-links {
         justify-content: flex-start;
     }
-}
 
-/*style untuk experience html*/
+    .site-header .container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem;
+    }
 
-.experience-section {
-    padding: 4rem 0;
-    border-top: 1px solid var(--line);
-}
+    .site-header nav {
+        gap: 1.25rem;
+        flex-wrap: wrap;
+    }
 
-.section-kicker {
-    font-size: 0.9rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    color: #E8D77A;
-    max-width: 480px;
-    margin-bottom: 0.5rem;
-    font-family: "Fraunces", serif;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-}
+    .brand {
+        font-size: 1.1rem;
+    }
 
-.experience-section h1 {
-    margin: 0 0 1.5rem;
-    font-size: 2rem;
-    font-family: "Rubik Mono One", -apple-system, sans-serif;
-    color: #ffffff;
-    font-size: 1.7rem;
-    text-align: center;
-}
+    .profile-box,
+    .section-header-box {
+        padding: 1.5rem 1.25rem;
+    }
 
-.experience-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 2rem;
-}
+    .experience-grid,
+    .skill-grid {
+        grid-template-columns: 1fr;
+    }
 
-.experience-card {
-    padding: 1.25rem;
-    background-color: #E3D9C9;
-    border-radius: var(--radius);
-    border: 1px solid transparent;
-    text-decoration: none;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
-    transition: 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    box-sizing: border-box;
-}
+    .experience-card {
+        gap: 0.75rem;
+        padding: 1rem;
+    }
 
-.experience-card:hover {
-    border-color: #3E2723;
-    background-color: #D8CCBA;
-}
+    .experience-thumbnail,
+    .experience-poster img {
+        width: 110px;
+        height: 140px;
+        flex-shrink: 0;
+    }
 
-.experience-category {
-    color: #3F4B32;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    min-height: 1.2rem;
-}
+    .experience-card h2 {
+        font-size: 1.05rem;
+        overflow-wrap: break-word;
+    }
 
-.experience-thumbnail{
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-    display: block;
-    margin: 0 auto;
-    border: 2px solid #3E2723;
-}
-
-.experience-card h2 {
-    margin: 0.5rem 0;
-    font-size: 1.25rem;
-}
-
-.experience-description,
-.empty-state {
-    color: #3F4B32;
-    font-weight: 500;
-    font-family: "Cormorant Garamond", -apple-system, sans-serif;
-    margin: 0;
-    height: 180px;
-    overflow: hidden;
-}
-
-.experience-status {
-    margin-top: auto;
-    padding-top: 1rem;
-    font-size: 0.85rem;
-    font-weight: 600;
-}
-
-/* Styling untuk Skill html */
-
-#skill-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-.skill-section h1 {
-    margin: 0 0 1.5rem;
-    font-size: 2rem;
-    font-family: "Rubik Mono One", -apple-system, sans-serif;
-    color: #ffffff;
-    font-size: 1.7rem;
-    text-align: center;
-}
-
-.skill-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 2rem;
-}
-.skill-card {
-    padding: 1.25rem;
-    background-color: #E3D9C9;
-    border-radius: var(--radius);
-    border: 1px solid transparent;
-    text-decoration: none;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
-    transition: 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    box-sizing: border-box;
-}
-
-.skill-card:hover {
-    border-color: #3E2723;
-    background-color: #D8CCBA;
-}
-
-.skill-thumbnail{
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-    display: block;
-    margin: 0 auto;
-    border: 2px solid #3E2723;
-}
-
-.skill-card h2 {
-    margin: 0.5rem 0;
-    font-size: 1.25rem;
-}
-
-.skill-description,
-.empty-state {
-    color: #3F4B32;
-    font-weight: 500;
-    font-family: "Cormorant Garamond", -apple-system, sans-serif;
-    margin: 0;
-    height: auto;
-    overflow: visible;
-}
-
-.skill-status {
-    margin-top: auto;
-    padding-top: 1rem;
-    font-size: 0.85rem;
-    font-weight: 600;
+    .experience-description {
+        font-size: 0.85rem;
+        overflow-wrap: break-word;
+    }
 }
