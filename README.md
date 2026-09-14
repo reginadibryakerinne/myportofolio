@@ -19,3 +19,28 @@ AI yang saya gunakan dalam pengerjaan Tugas 1 adalah ChatGpt. Adapun penggunaan 
 - Membantu saya mengetahui cara melakukan hard refresh
 - Membantu saya dalam merapikan logo yang saya masukkan sehingga alignnya center
 Strategi yang saya gunakan dalam promting adalah membuat sebisa daya + bantuan youtube kemudian jika belum sesuai saya bertanya pada AI. Selain itu saya juga  bertanya apabila saya meragukan permahaman saya akan perintah di website pbp
+
+### Tugas 2
+
+1. Saat localhost:8000/skill/ dijalankan untuk melihat halaman skill pada portofolio saya yang baru saja diupdate, alur yang terjadi adalah browser mengirimkan request ke proyek Django. Django akan mengecek portofolio/urls.py sebagai URL konfigurasi proyek untuk menentukan aplikasi yang menangani URL tersebut dan melemparnya ke main/urls.py(urls.py aplikasi). Kemudian akan ditunjuk view function tertentu yang pada kasus ini adalah show_skill. View bertugas untuk menjalankan logic seperti mengambil data lewat model Skill yang menjadi representasi dari skill database. Setelah data skill diperoleh, view mengirimkannya sebagai context ke template skill.html. Kemudian, template akan menggunakan data skill untuk memproses HTML secara dinamis. HTML hasil rendering selanjutnya dikirim kembali ke browser yang akan menampilkan halaman Skill.
+
+2. - Dengan adanya penggunaan model setiap kali developer ingin untuk mengupdate/ mengubah database tidak perlu untuk mengotak atik kode HTML secara manual (cukup mengubah bagian pada database yang ingin diupdate, dan akan terintegrasi secara otomatis)
+- Dengan model data dapat ditambah/dihapus/diedit melalui database atau Django Admin tanpa mengubah kode template. Sedangkan jika langsung ditemplate setiap ingin melakukan perubahan pada data akan membutuhkan developer untuk mengubah kode template
+- Dengan penggunaan model maka seperation of concerns akan tercapai dimana template berfokus pada tampilan, model berfokus pada pengelolaan data, dan view menjadi penghubungnya
+- Dengan adanya model, setiap tipe data yang digunakan oleh tiap field akan selalu konsisten dengan format yang sesuai (berdasarkan ketentuan)
+
+3. makemigration => digunakan untuk membaca perubahan yang dibuat di models.py dan membuat file migrasi (terdapat di folder migrations) yang berisi instruksi perubahan dari struktur database yang akan diterapkan(belum diaplikasikan ke database).  
+migrate => digunakan untuk mengaplikasikan file-file migirasi tersebut kedatabase sesuai instruksi di file migrasi.
+contoh pada pekerjaan saya, pembuatan field "category" yang menjadi penanda apakah skill tersebut hardskill atau soft skill. python manage.py makemigrations => memicu Django mendeteksi adanya field category di model skill, yang kemudian akan membuat file migrasi baru. Saat saya menjalankan command python manage.py migrate => Django membaca file migrasi tersebut dan mengupdate database. 
+Jika hanya melakukan makemigration tanpa migrate. instruksi perubahan memang ada namun tidak menyebabkan perubahan pada database.
+
+Dokumentasi & AI Disclosure:
+Chat dengan AI : https://chatgpt.com/share/6aa813f6-2be4-83ec-8df9-3fd26bd97a12
+AI yang saya gunakan dalam pengerjaan Tugas 1 adalah ChatGpt. Adapun penggunaan saya adalah untuk :
+- Mengetahui perbedaan dari CharField dan TextField pada models
+- Membantu saya dalam mengupdate data yang sebelumnya sudah saya masukkan kedalam shell
+- Membantu debugging error yang terjadi akibat perbedaan branch master dan main saya
+Strategi yang saya gunakan dalam promting adalah mengusahakan hal-hal yang masih saya pahami dengna panduan dan menonton tutorial youtube. Namun jika terdapat ketidakpahaman yang saya tidak temukan jawabannya tanpa AI, saya akan menggunakan AI untuk membantu saya
+
+Yang saya lakukan pada tugas 2 : 
+- Pengimplementasian MVT untuk section skill portofolio saya
