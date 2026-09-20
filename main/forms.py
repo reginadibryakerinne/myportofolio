@@ -1,6 +1,6 @@
 from django.forms import ModelForm, TextInput, Textarea, URLInput
 
-from main.models import Project, Experience
+from main.models import Project, Experience, Skill
 
 class ProjectForm(ModelForm):
     class Meta:
@@ -84,6 +84,48 @@ class ExperienceForm(ModelForm):
             "category": TextInput(
                 attrs={
                     "placeholder": "internship, research, volunteer, part-time, full-time, freelance",
+                }
+            ),
+            "thumbnail": URLInput(
+                attrs={
+                    "placeholder": "https://drive.google.com/thumbnail?id=...&sz=w1000",
+                }
+            ),
+        }
+
+class SkillForm(ModelForm):
+    class Meta:
+        model = Skill
+        fields = [
+            "title",
+            "description",
+            "category",
+            "thumbnail",
+        ]
+
+        labels = {
+            "title": "Skill",
+            "description": "Deskripsi Skill",
+            "category": "Kategori Skill",
+            "thumbnail": "URL Skill",
+        }
+
+        widgets = {
+            "title": TextInput(
+                attrs={
+                    "placeholder": "Nama Skill",
+                    "maxlength": 255,
+                }
+            ),
+            "description": Textarea(
+                attrs={
+                    "placeholder": "Deskripsikan skillmu",
+                    "rows": 3,
+                }
+            ),
+            "category": TextInput(
+                attrs={
+                    "placeholder": "hard, soft",
                 }
             ),
             "thumbnail": URLInput(

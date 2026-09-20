@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from main.models import Experience, Skill, Project
-from main.forms import ProjectForm, ExperienceForm
+from main.forms import ProjectForm, ExperienceForm, SkillForm
 
 
 def show_main(request):
@@ -38,12 +38,21 @@ def show_experience(request):
     return render(request, "experience.html", context)
 
 def show_skill(request):
+    json_response = get_skill_json(request)
+
+    skills = serializers.deserialize(
+        "json",
+        json_response.content.decode("utf-8"),
+    )
+    skills = [skill.object for skill in skills]
+    title_query = request.GET.get("title", "").strip()
+
     context = {
         "name": "Regina Dibrya Kerinne Purba",
-        "skill_list": Skill.objects.all(),
+        "skill_list": skills,
+        "title_query": title_query,
     }
     return render(request, "skill.html", context)
-
 
 def show_projects(request):
     json_response = get_projects_json(request)
@@ -130,3 +139,37 @@ def delete_experience(request, experience_id):
         return redirect("main:show_experience")
 
     return redirect("main:show_experience")
+
+def create_skill(request):
+    form = SkillForm(request.POST or None)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Skill baru berhasil ditambahkan!")
+        return redirect("main:show_skill")
+
+    context = {
+        "name": "Regina Dibrya Kerinne Purba",
+        "form": form,
+    }
+    return render(request, "skill_form.html", context)
+
+def get_skill_json(request):
+    title_query = request.GET.get("title", "").strip()
+    skill = Skill.objects.all()
+
+    if title_query:
+        skill = skill.filter(title__icontains=title_query)
+
+    skill_json = serializers.serialize("json", skill)
+    return HttpResponse(skill_json, content_type="application/json")
+
+def delete_skill(request, skill_id):
+    skill = get_object_or_404(Skill, pk=skill_id)
+
+    if request.method == "POST":
+        skill.delete()
+        messages.success(request, "Skill berhasil dihapus!")
+        return redirect("main:show_skill")
+
+    return redirect("main:show_skill")
