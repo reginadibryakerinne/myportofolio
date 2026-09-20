@@ -1,20 +1,40 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% block meta %}
+    <title>Skills - {{ name }}</title>
+{% endblock meta %}
 {% block content %}
     <main>
         <section class="skill-section" id="skill">
-            <div class="section-header-box">
+            <div class="section-header-box"> 
                 <div class="container">
-                    <p class="section-kicker"></p>
-                    <h1>Skills</h1>
-
-                    <div class="skill-grid">
+                    <p class="section-kicker">Keahlian yang saya kuasai</p>
+                    <div class="project-header">
+                        <h1>Skills</h1>
+                        <a href="{% url 'main:create_skill' %}"
+                        class="button project-add-button">
+                            <span aria-hidden="true">+</span>
+                            Tambah Skill
+                        </a>
+                    </div>
+                    <form method="get"
+                        action="{% url 'main:show_skill' %}"
+                        class="project-search">
+                        <input type="search"
+                            name="title"
+                            value="{{ title_query }}"
+                            placeholder="Cari berdasarkan nama skill"
+                            class="project-search__input"
+                            aria-label="Cari berdasarkan nama skill">
+                        <button type="submit" class="button">Cari</button>
+                    </form>
+                    <div class="skill-grid project-grid">
                         {% for skill in skill_list %}
                             <article class="skill-card">
-
                                 {% if skill.thumbnail %}
-                                <img class="skill-thumbnail" src="{{ skill.thumbnail }}" alt="{{ skill.title }}">
+                                    <img class="skill-thumbnail"
+                                        src="{{ skill.thumbnail }}"
+                                        alt="{{ skill.title }}">
                                 {% endif %}
-                                
                                 <span class="skill">
                                     {{ skill.get_category_display }}
                                 </span>
@@ -22,16 +42,22 @@
                                 <p class="skill-description" style="white-space: pre-line;">
                                     {{ skill.description }}
                                 </p>
+                                <div class="project-card-actions">
+                                    <div class="project-actions">
+                                        {% include "components/skill_delete_modal.html" with skill=skill %}
+                                    </div>
+                                </div>
                             </article>
                         {% empty %}
-                            <p class="empty-state">
-                                Belum ada skill yang ditambahkan.
-                            </p>
+                            {% if title_query %}
+                                <p class="empty-state">Tidak ada skill dengan nama tersebut.</p>
+                            {% else %}
+                                <p class="empty-state">Belum ada skill yang ditambahkan.</p>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </div>
-            </div>   
+            </div>
         </section>
     </main>
-
 {% endblock content %}

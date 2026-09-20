@@ -319,7 +319,7 @@ h1, .brand {
 
 .experience-description,
 .empty-state {
-    color: var(--ink);
+    color: var(--accent);
     font-weight: 500;
     font-family: "Cormorant Garamond", -apple-system, sans-serif;
     margin: 0;
@@ -429,7 +429,7 @@ h1, .brand {
 
 .skill-description,
 .empty-state {
-    color: var(--ink);
+    color: var(--accent);
     opacity: 0.85;
     font-weight: 500;
     font-family: "Cormorant Garamond", -apple-system, sans-serif;
@@ -621,6 +621,7 @@ h1, .brand {
 
 .button-secondary {
     background: var(--ink);
+    color: var(--accent);
 }
 
 .project-header {
@@ -674,9 +675,9 @@ h1, .brand {
     width: 100%;
     min-width: 0;
     padding: 0.7rem;
-    border: 1px solid var(--line);
+    border: 1px solid var(--ink);
     border-radius: var(--radius);
-    background: #fff;
+    background: var(--accent);
     color: var(--ink);
     font: inherit;
 }
@@ -786,5 +787,6 @@ h1, .brand {
 }
 
 .button-danger {
-    background: #b42318;
+    background: #560b18;
+    border: none;
 }
