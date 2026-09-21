@@ -44,6 +44,7 @@
                                 </p>
                                 <div class="project-card-actions">
                                     <div class="project-actions">
+                                        <a href="{% url 'main:update_skill' skill.id %}" class="button">Edit</a>
                                         {% include "components/skill_delete_modal.html" with skill=skill %}
                                     </div>
                                 </div>
