@@ -77,3 +77,6 @@ membantu menentukan commit message yang sesuai dengan pereubahan yang saya buat 
 
 membantu saya untuk memperbaiki alur penulisan jawaban pertanyaan refleksi
 
+003 / 3 - Pemahaman serta solusi dari error: https://chatgpt.com/s/t_6ab0e187e11481919a0e9b178f0a9dc7
+
+membantu saya untuk solving masalah error akibat main GitHub punya commit yang belum ada di lokal branch master saya
