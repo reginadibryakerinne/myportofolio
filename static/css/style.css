@@ -319,7 +319,7 @@ h1, .brand {
 
 .experience-description,
 .empty-state {
-    color: var(--accent);
+    color: var(--ink);
     font-weight: 500;
     font-family: "Cormorant Garamond", -apple-system, sans-serif;
     margin: 0;
@@ -429,7 +429,7 @@ h1, .brand {
 
 .skill-description,
 .empty-state {
-    color: var(--accent);
+    color: var(--ink);
     opacity: 0.85;
     font-weight: 500;
     font-family: "Cormorant Garamond", -apple-system, sans-serif;
