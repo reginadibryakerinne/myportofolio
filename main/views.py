@@ -201,3 +201,17 @@ def delete_skill(request, skill_id):
         return redirect("main:show_skill")
 
     return redirect("main:show_skill")
+
+def update_skill(request, skill_id):
+    skill = get_object_or_404(Skill, pk=skill_id)
+    form = SkillForm(request.POST or None, instance=skill)
+
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return redirect("main:show_skill")
+
+    context = {
+        'form': form,
+        'project': skill,
+    }
+    return render(request, "skill_update.html", context)
