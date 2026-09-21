@@ -154,6 +154,20 @@ def delete_experience(request, experience_id):
 
     return redirect("main:show_experience")
 
+def update_experience(request, experience_id):
+    experience = get_object_or_404(Experience, pk=experience_id)
+    form = ExperienceForm(request.POST or None, instance=experience)
+
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return redirect("main:show_experience")
+
+    context = {
+        'form': form,
+        'project': experience,
+    }
+    return render(request, "experience_update.html", context)
+
 def create_skill(request):
     form = SkillForm(request.POST or None)
 
