@@ -44,3 +44,36 @@ Strategi yang saya gunakan dalam promting adalah mengusahakan hal-hal yang masih
 
 Yang saya lakukan pada tugas 2 : 
 - Pengimplementasian MVT untuk section skill portofolio saya
+
+### Tugas 3
+
+1. Penggunaan ModelForm kita gunakan pada tugas ini untuk membuat form berdasarkan model Django secara otomatis. Selain itu dengan penggunaan ModelForm akan dilakukan proses validasi tipe data antara field dengan input user beserta constraintnya. Hal ini akan membuat kode lebih sederhana, tidak redundant, dan memastikan form tetap sesuai dengan struktur model. Berbeda dengan HTML yang tidak punya proses validasi otomatis dan proses input data pun harus dilakukan secara manual tiap kali menambah/mengubah field di model. Sehingga hanya mengandalkan penggunaan HTML akan sangat memungkinkan terjadinya human error.
+
+Menambahkan {% csrf_token %} diwajibkan oleh Django untuk semua form dengan method POST/PUT/DELETE secara default (via CsrfViewMiddleware) dengan tujuan menyisipkan token unik dan acak ke dalam form dimana Django akan menyimpan token ini di session dan melakukan validasi apakah token yang dikirim balik saat submit cocok dengan yang ada di session. Dengan regulasi tersebut, situs penyerah tidak bisa mengambil token, sehingga request palsu akan ditolak dengan error 403 Forbiddden
+
+2. - Lebih Ringkas dibanding XML 
+XML => tiap elemen butuh opening dan closing tag, menyebabkan struktur lebih verbose
+JSON => cukup direpresentasikan sebagai pasangan key-value tanpa tag pembungkus berulang, sehingga size-nya lebih kecil
+
+- Integrasi yang sangat natural dengan JavaScript di sisi frontend
+Struktunya yang persis sama dengan object literal di JavaScript membuat  browser bisa langsung menggunakan JSON.parse() respons API jadi object JS tanpa parsing tambahan yang berat. Selain itu, karena frontend modern didominasi JavaScript, kecocokan native ini menjadi alasan praktis terbesar mengapa REST API modern hampir selalu memakai JSON.
+
+- Parser lebih cepat 
+JSON => struktur data yang lebih sederhana (cuma object, array, string, number, boolean, null)
+XML => namespace, atribut vs elemen, DTD, atau schema validation kompleks
+fitur-fitur pada XML tersebut menyebabkan bertambahnya kompleksitas proses parsing   
+
+3. Request dari client diarahkan ke view. Di dalam view itu sendiri, terjadi dua langkah berurutan: pertama, view mengambil data dari database lewat model Django (menghasilkan QuerySet berupa objek Python), lalu langkah kedua, data itu di-serialize (proses mengubah object atau data Django menjadi struktur data yang dapat direpresentasikan dalam format JSON) sebelum dibungkus sebagai HttpResponse dan dikirim balik ke client. Kemudian client menerima response dalam bentuk JSON.
+
+Serialization diperlukan karena object atau model Django tidak secara langsung menggunakan format JSON. JSON hanya dapat merepresentasikan tipe data tertentu seperti object, array, string, number, boolean, dan null. Oleh karena itu, data dari model perlu diubah terlebih dahulu menjadi representasi data yang sesuai dengan JSON sebelum dikirim melalui HTTPResponse.
+
+Dokumentasi & AI Disclosure:
+
+001 / 3 - Commit message yang tepat untuk tugas 3:  https://chatgpt.com/s/t_6ab0d899e8a4819190eda2ffe90e327d
+
+membantu menentukan commit message yang sesuai dengan pereubahan yang saya buat dalam tugas
+
+002 / 3 - Memvalidasi jawaban pertanyaan refleksi: https://chatgpt.com/s/t_6ab0da6fca40819198a3d50eba78ca37
+
+membantu saya untuk memperbaiki alur penulisan jawaban pertanyaan refleksi
+
