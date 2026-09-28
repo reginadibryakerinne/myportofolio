@@ -169,7 +169,7 @@ def get_experience_json(request):
     if title_query:
         experience = experience.filter(title__icontains=title_query)
 
-    experience_json = serializers.serialize("json", experience)
+    experience_json = serializers.serialize("json", experience, use_natural_foreign_keys=True)
     return HttpResponse(experience_json, content_type="application/json")
 
 @login_required(login_url="/login/")
@@ -226,7 +226,7 @@ def get_skill_json(request):
     if title_query:
         skill = skill.filter(title__icontains=title_query)
 
-    skill_json = serializers.serialize("json", skill)
+    skill_json = serializers.serialize("json", skill, use_natural_foreign_keys=True)
     return HttpResponse(skill_json, content_type="application/json")
 
 @login_required(login_url="/login/")
