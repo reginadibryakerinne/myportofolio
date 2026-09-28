@@ -26,6 +26,14 @@ def show_main(request):
     }
     return render(request, "index.html", context)
 
+def is_editor(user):
+    """True jika user login dan termasuk grup Editor."""
+    return user.is_authenticated and user.groups.filter(name="Editor").exists()
+
+def can_edit(user):
+    """Superuser (pemilik) dan Editor boleh mengubah data."""
+    return user.is_superuser or is_editor(user)
+
 def show_experience(request):
     json_response = get_experience_json(request)
 
@@ -40,6 +48,7 @@ def show_experience(request):
         "name": "Regina Dibrya Kerinne Purba",
         "experience_list": experience,
         "title_query": title_query,
+        "is_editor": is_editor(request.user),
     }
     return render(request, "experience.html", context)
 
@@ -57,6 +66,7 @@ def show_skill(request):
         "name": "Regina Dibrya Kerinne Purba",
         "skill_list": skills,
         "title_query": title_query,
+        "is_editor": is_editor(request.user),
     }
     return render(request, "skill.html", context)
 
@@ -117,7 +127,10 @@ def delete_project(request, project_id):
 
     return redirect("main:show_projects")
 
+@login_required(login_url="/login/")
 def update_project(request, project_id):
+    if not can_edit(request.user):
+        raise PermissionDenied
     project = get_object_or_404(Project, pk=project_id)
     form = ProjectForm(request.POST or None, instance=project)
 
@@ -131,7 +144,10 @@ def update_project(request, project_id):
     }
     return render(request, "project_update.html", context)
 
+@login_required(login_url="/login/")
 def create_experience(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
     form = ExperienceForm(request.POST or None)
 
     if request.method == "POST" and form.is_valid():
@@ -156,7 +172,10 @@ def get_experience_json(request):
     experience_json = serializers.serialize("json", experience)
     return HttpResponse(experience_json, content_type="application/json")
 
+@login_required(login_url="/login/")
 def delete_experience(request, experience_id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
     experience = get_object_or_404(Experience, pk=experience_id)
 
     if request.method == "POST":
@@ -166,7 +185,10 @@ def delete_experience(request, experience_id):
 
     return redirect("main:show_experience")
 
+@login_required(login_url="/login/")
 def update_experience(request, experience_id):
+    if not can_edit(request.user):
+        raise PermissionDenied
     experience = get_object_or_404(Experience, pk=experience_id)
     form = ExperienceForm(request.POST or None, instance=experience)
 
@@ -180,7 +202,10 @@ def update_experience(request, experience_id):
     }
     return render(request, "experience_update.html", context)
 
+@login_required(login_url="/login/")
 def create_skill(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
     form = SkillForm(request.POST or None)
 
     if request.method == "POST" and form.is_valid():
@@ -204,7 +229,10 @@ def get_skill_json(request):
     skill_json = serializers.serialize("json", skill)
     return HttpResponse(skill_json, content_type="application/json")
 
+@login_required(login_url="/login/")
 def delete_skill(request, skill_id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
     skill = get_object_or_404(Skill, pk=skill_id)
 
     if request.method == "POST":
@@ -214,7 +242,10 @@ def delete_skill(request, skill_id):
 
     return redirect("main:show_skill")
 
+@login_required(login_url="/login/")
 def update_skill(request, skill_id):
+    if not can_edit(request.user):
+        raise PermissionDenied
     skill = get_object_or_404(Skill, pk=skill_id)
     form = SkillForm(request.POST or None, instance=skill)
 

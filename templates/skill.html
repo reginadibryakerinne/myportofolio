@@ -44,8 +44,12 @@
                                 </p>
                                 <div class="project-card-actions">
                                     <div class="project-actions">
+                                    {% if user.is_superuser or is_editor %}
                                         <a href="{% url 'main:update_skill' skill.id %}" class="button">Edit</a>
+                                    {% endif %}
+                                    {% if user.is_superuser %}
                                         {% include "components/skill_delete_modal.html" with skill=skill %}
+                                    {% endif %}
                                     </div>
                                 </div>
                             </article>
