@@ -1,6 +1,6 @@
 from django.urls import path
 
-from main.views import show_main, show_experience, show_skill, show_projects, create_project,delete_project, get_projects_json, update_project, create_experience, get_experience_json, delete_experience, update_experience, create_skill, get_skill_json, delete_skill, update_skill, register, login_user, logout_user, toggle_star
+from main.views import show_main, show_experience, show_skill, show_projects, create_project,delete_project, get_projects_json, update_project, create_experience, get_experience_json, delete_experience, update_experience, create_skill, get_skill_json, delete_skill, update_skill, register, login_user, logout_user, toggle_star_project, toggle_star_experience
 
 app_name = "main"
 
@@ -11,6 +11,7 @@ urlpatterns = [
     path("api/experience/", get_experience_json, name="get_experience_json"),
     path("experience/<uuid:experience_id>/delete/",delete_experience,name="delete_experience"),
     path("experience/<uuid:experience_id>/update/", update_experience, name='update_experience'),
+    path("experience/<uuid:experience_id>/star/", toggle_star_experience, name="toggle_star_experience",),
     path("skill/", show_skill, name="show_skill"),
     path("skill/add/", create_skill, name="create_skill"),
     path("api/skill/", get_skill_json, name="get_skill_json"),
@@ -21,7 +22,7 @@ urlpatterns = [
     path("api/projects/", get_projects_json, name="get_projects_json"),
     path("projects/<uuid:project_id>/delete/", delete_project,name="delete_project"),
     path("projects/<uuid:project_id>/update/", update_project, name='update_project'),
-    path("projects/<uuid:project_id>/star/", toggle_star, name="toggle_star",),
+    path("projects/<uuid:project_id>/star/", toggle_star_project, name="toggle_star_project",),
     path("register/", register, name="register"),
     path("login/", login_user, name="login"),
     path("logout/", logout_user, name="logout"),
