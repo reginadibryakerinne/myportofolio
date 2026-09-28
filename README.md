@@ -70,13 +70,20 @@ Serialization diperlukan karena object atau model Django tidak secara langsung m
 Dokumentasi & AI Disclosure:
 
 001 / 3 - Commit message yang tepat untuk tugas 3:  https://chatgpt.com/s/t_6ab0d899e8a4819190eda2ffe90e327d
-
 membantu menentukan commit message yang sesuai dengan pereubahan yang saya buat dalam tugas
 
 002 / 3 - Memvalidasi jawaban pertanyaan refleksi: https://chatgpt.com/s/t_6ab0da6fca40819198a3d50eba78ca37
-
 membantu saya untuk memperbaiki alur penulisan jawaban pertanyaan refleksi
 
 003 / 3 - Pemahaman serta solusi dari error: https://chatgpt.com/s/t_6ab0e187e11481919a0e9b178f0a9dc7
-
 membantu saya untuk solving masalah error akibat main GitHub punya commit yang belum ada di lokal branch master saya
+
+004 / 4 - Pemahaman mengenai sumber data & variabel : https://chatgpt.com/s/p_6aba81fbee4c819185c974f802759b76
+Membantu menemukan & memberi pemahaman mengenai variabel loop & sumber data pada experience.html
+
+005 / 4 - Debugging Error : https://chatgpt.com/s/p_6aba82d93ef8819198b7b0a5b898bf96
+Membantu saya memperbaiki kesalahan pada code saya yang eror akibat penggantian nama function 
+
+006 / 4 - Commit message yang tepat untuk memastikan endpoint JSON : https://chatgpt.com/s/p_6aba838fbaa481918fb317696a7b2630
+membantu menentukan commit message yang sesuai dengan perubahan yang saya buat pada tugas 4
+
