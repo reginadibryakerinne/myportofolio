@@ -1,6 +1,6 @@
 from django.urls import path
 
-from main.views import show_main, show_experience, show_skill, show_projects, create_project,delete_project, get_projects_json, update_project, create_experience, get_experience_json, delete_experience, update_experience, create_skill, get_skill_json, delete_skill, update_skill, register, login_user, logout_user, toggle_star_project, toggle_star_experience, toggle_star_skill, create_project_ajax, create_experience_ajax
+from main.views import show_main, show_experience, show_skill, show_projects, create_project,delete_project, get_projects_json, update_project, create_experience, get_experience_json, delete_experience, update_experience, create_skill, get_skill_json, delete_skill, update_skill, register, login_user, logout_user, toggle_star_project, toggle_star_experience, toggle_star_skill, create_project_ajax, create_experience_ajax, create_skill_ajax
 
 app_name = "main"
 
@@ -19,6 +19,7 @@ urlpatterns = [
     path("skill/<uuid:skill_id>/delete/",delete_skill,name="delete_skill"),
     path("skill/<uuid:skill_id>/update/", update_skill, name='update_skill'),
     path("skill/<uuid:skill_id>/star/", toggle_star_skill, name="toggle_star_skill",),
+    path("skill/add-ajax/", create_skill_ajax, name="create_skill_ajax"),
     path("projects/", show_projects, name="show_projects"),
     path("projects/add/", create_project, name="create_project"),
     path("api/projects/", get_projects_json, name="get_projects_json"),
