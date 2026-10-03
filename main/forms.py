@@ -66,12 +66,7 @@ class ProjectForm(ModelForm):
 class ExperienceForm(ModelForm):
     class Meta:
         model = Experience
-        fields = [
-            "title",
-            "description",
-            "category",
-            "thumbnail",
-        ]
+        fields = ["title", "description", "category", "thumbnail"]
 
         labels = {
             "title": "Nama Pengalaman",
@@ -81,28 +76,9 @@ class ExperienceForm(ModelForm):
         }
 
         widgets = {
-            "title": TextInput(
-                attrs={
-                    "placeholder": "Portfolio Pengalaman",
-                    "maxlength": 255,
-                }
-            ),
-            "description": Textarea(
-                attrs={
-                    "placeholder": "Ceritakan Pengalamanmu",
-                    "rows": 3,
-                }
-            ),
-            "category": TextInput(
-                attrs={
-                    "placeholder": "internship, research, volunteer, part-time, full-time, freelance",
-                }
-            ),
-            "thumbnail": URLInput(
-                attrs={
-                    "placeholder": "https://drive.google.com/thumbnail?id=...&sz=w1000",
-                }
-            ),
+            "title": TextInput(attrs={"placeholder": "Portfolio Pengalaman", "maxlength": 255}),
+            "description": Textarea(attrs={"placeholder": "Ceritakan Pengalamanmu", "rows": 3}),
+            "thumbnail": URLInput(attrs={"placeholder": "https://drive.google.com/thumbnail?id=...&sz=w1000"}),
         }
 
     def clean_title(self):
@@ -111,12 +87,12 @@ class ExperienceForm(ModelForm):
             raise ValidationError("Nama pengalaman tidak boleh hanya berisi tag HTML.")
         return title
 
-    def clean_tech_stack(self):
-        return strip_tags(self.cleaned_data["tech_stack"]).strip()
-
     def clean_description(self):
-        return strip_tags(self.cleaned_data["description"]).strip()
-
+        description = strip_tags(self.cleaned_data["description"]).strip()
+        if not description:
+            raise ValidationError("Deskripsi tidak boleh hanya berisi tag HTML.")
+        return description
+        
 class SkillForm(ModelForm):
     class Meta:
         model = Skill
