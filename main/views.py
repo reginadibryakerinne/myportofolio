@@ -46,21 +46,14 @@ def show_experience(request):
     }
     return render(request, "experience.html", context)
 
-def show_skill(request):
-    json_response = get_skill_json(request)
 
-    skills = serializers.deserialize(
-        "json",
-        json_response.content.decode("utf-8"),
-    )
-    skills = [skill.object for skill in skills]
+def show_skill(request):
     title_query = request.GET.get("title", "").strip()
 
     context = {
         "name": "Regina Dibrya Kerinne Purba",
-        "skill_list": skills,
         "title_query": title_query,
-        "is_editor": is_editor(request.user),
+        "form": SkillForm(),
     }
     return render(request, "skill.html", context)
 
@@ -286,13 +279,32 @@ def create_skill(request):
 
 def get_skill_json(request):
     title_query = request.GET.get("title", "").strip()
-    skill = Skill.objects.all()
+    skills = Skill.objects.prefetch_related("starred_by").all()
 
     if title_query:
-        skill = skill.filter(title__icontains=title_query)
+        skills = skills.filter(title__icontains=title_query)
 
-    skill_json = serializers.serialize("json", skill, use_natural_foreign_keys=True)
-    return HttpResponse(skill_json, content_type="application/json")
+    data = []
+    for skill in skills:
+        starred_users = list(skill.starred_by.all())
+        is_starred = request.user in starred_users if request.user.is_authenticated else False
+        starred_by_names = ", ".join(u.username for u in starred_users)
+
+        data.append({
+            "pk": str(skill.pk),
+            "fields": {
+                "title": skill.title,
+                "description": skill.description,
+                "category": skill.category,
+                "category_display": skill.get_category_display(),
+                "thumbnail": skill.thumbnail or "",
+                "star_count": len(starred_users),
+                "is_starred": is_starred,
+                "starred_by_names": starred_by_names,
+            }
+        })
+
+    return JsonResponse(data, safe=False)
 
 @login_required(login_url="/login/")
 def delete_skill(request, skill_id):
@@ -323,6 +335,24 @@ def update_skill(request, skill_id):
         'project': skill,
     }
     return render(request, "skill_update.html", context)
+
+@require_POST
+def create_skill_ajax(request):
+    if not request.user.is_superuser:
+        return JsonResponse(
+            {"message": "Hanya pemilik portofolio yang dapat menambahkan skill."},
+            status=403,
+        )
+
+    form = SkillForm(request.POST)
+    if form.is_valid():
+        skill = form.save()
+        return JsonResponse(
+            {"message": "Skill berhasil ditambahkan.", "pk": str(skill.id)},
+            status=201,
+        )
+
+    return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
 
 def register(request):
     form = UserCreationForm(request.POST or None)
