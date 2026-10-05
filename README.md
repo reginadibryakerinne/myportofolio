@@ -87,3 +87,18 @@ Membantu saya memperbaiki kesalahan pada code saya yang eror akibat penggantian 
 006 / 4 - Commit message yang tepat untuk memastikan endpoint JSON : https://chatgpt.com/s/p_6aba838fbaa481918fb317696a7b2630
 membantu menentukan commit message yang sesuai dengan perubahan yang saya buat pada tugas 4
 
+### Tugas 5
+1. Debouncing adalah cara  menunda eksekusi fungsi sampai pengguna berhenti memicu event selama jeda tertentu (300 ms pada tugas saya). Setiap mengetik akan membatalkan timer sebelumnya dan memulai yang baru, sehingga request hanya dikirim setelah pengguna selesai mengetik. Pada pencarian AJAX ini adalah hal penting karena tanpa debouncing, setiap karakter memicu satu request (misalnya mencari "Django" = 6 request), yang membebani server dan jaringan serta bisa membuat hasil lama menimpa hasil terbaru.
+
+2. await membuat fungsi async menunggu Promise dari fetch() selesai dan mendapatkan objek Response sebelum melanjutkan ke baris berikutnya. Tanpa await, fetch() hanya mengembalikan Promise, sehingga response belum berupa objek Response dan kita tidak dapat langsung menggunakan response.ok atau memproses response.json() sebagai data hasil response. Selain itu, penanganan error juga perlu dilakukan melalui Promise seperti .catch() atau await di dalam try/catch.
+
+3. XSS (Cross-Site Scripting) adalah serangan ketika penyerang menyisipkan kode JavaScript yang kemudian dijalankan di browser pengguna lain, misalnya melalui data yang tersimpan di database (stored XSS). Data yang ditampilkan melalui AJAX/JavaScript dapat menjadi rentan jika data tersebut langsung dimasukkan ke halaman menggunakan innerHTML tanpa melakukan escaping. Berbeda dengan template Django, output {{ variabel }} secara default akan di-escape oleh Django. Karena itu, ketika menampilkan data dari AJAX menggunakan JavaScript, kita perlu melakukan escaping seperti dengan escapeHtml agar data tidak dianggap sebagai HTML, serta dapat melakukan sanitasi di server seperti strip_tags sesuai kebutuhan.
+
+Dokumentasi & AI Disclosure:
+007 / 5 - Commit message yang tepat untuk Web Interactivity with JavaScript : https://chatgpt.com/s/p_6ac3b06c5970819189bd2b379dd5cae5
+membantu menentukan commit message yang sesuai dengan perubahan yang saya buat pada tugas 5
+
+008 / 5 - Commit message yang tepat untuk fix isi dari ExperienceForms : https://chatgpt.com/s/p_6ac3b0b81000819192194a30ed9b7818
+membantu menentukan commit message yang sesuai dengan perubahan yang saya lakukan di ExperienceForms
+
+
