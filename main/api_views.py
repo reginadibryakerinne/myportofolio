@@ -7,9 +7,9 @@ from rest_framework.decorators import (
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from main.models import Project, Experience
+from main.models import Project, Experience, Skill
 from main.permissions import IsPortfolioOwnerOrReadOnly, IsPortfolioOwnerOrEditorOrReadOnly
-from main.serializers import ProjectSerializer, ExperienceSerializer
+from main.serializers import ProjectSerializer, ExperienceSerializer, SkillSerializer
 
 
 @api_view(["GET", "HEAD", "POST"])
@@ -120,3 +120,99 @@ def experience_star(request, experience_id):
         experience.starred_by.add(request.user)
     serializer = ExperienceSerializer(experience, context={"request": request})
     return Response(serializer.data)
+
+@api_view(["GET", "POST"])
+@authentication_classes([SessionAuthentication])
+@permission_classes([IsPortfolioOwnerOrEditorOrReadOnly])
+def skill_list(request):
+    if request.method == "GET":
+        skills = Skill.objects.prefetch_related(
+            "starred_by"
+        ).order_by("title", "id")
+
+        title = request.GET.get("title")
+
+        if title:
+            skills = skills.filter(title__icontains=title)
+
+        serializer = SkillSerializer(
+            skills,
+            many=True,
+            context={"request": request},
+        )
+
+        return Response(serializer.data)
+
+    serializer = SkillSerializer(
+        data=request.data,
+        context={"request": request},
+    )
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED,
+        )
+
+    return Response(
+        serializer.errors,
+        status=status.HTTP_400_BAD_REQUEST,
+    )
+
+@api_view(["GET", "PUT", "PATCH", "DELETE"])
+@authentication_classes([SessionAuthentication])
+@permission_classes([IsPortfolioOwnerOrEditorOrReadOnly])
+def skill_detail(request, skill_id):
+    skill = get_object_or_404(Skill, id=skill_id)
+
+    if request.method == "GET":
+        serializer = SkillSerializer(
+            skill,
+            context={"request": request},
+        )
+        return Response(serializer.data)
+
+    if request.method in ["PUT", "PATCH"]:
+        serializer = SkillSerializer(
+            skill,
+            data=request.data,
+            partial=request.method == "PATCH",
+            context={"request": request},
+        )
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    if request.method == "DELETE":
+        skill.delete()
+        return Response(
+            status=status.HTTP_204_NO_CONTENT,
+        )
+
+@api_view(["POST"])
+@authentication_classes([SessionAuthentication])
+@permission_classes([IsAuthenticated])
+def skill_star(request, skill_id):
+    skill = get_object_or_404(Skill, id=skill_id)
+
+    if skill.starred_by.filter(id=request.user.id).exists():
+        skill.starred_by.remove(request.user)
+        is_starred = False
+    else:
+        skill.starred_by.add(request.user)
+        is_starred = True
+
+    return Response({
+        "is_starred": is_starred,
+        "star_count": skill.starred_by.count(),
+        "starred_by_names": list(
+            skill.starred_by.values_list("username", flat=True)
+        ),
+    })

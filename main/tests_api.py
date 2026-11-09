@@ -5,7 +5,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 
-from main.models import Project, Experience
+from main.models import Project, Experience, Skill
 
 
 class ProjectAPITest(APITestCase):
@@ -105,6 +105,7 @@ class ProjectAPITest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["star_count"], 0)
         self.assertFalse(response.data["is_starred"])
+        self.assertEqual(response.data["starred_by_names"], "")
 
     def test_staff_and_editor_cannot_manage_tutorial_projects(self):
         self.visitor.is_staff = True
@@ -458,3 +459,142 @@ class ExperienceAPITest(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         self.assertEqual(Experience.objects.count(), 1)
+
+class SkillAPITest(APITestCase):
+    def setUp(self):
+        editor_group, _ = Group.objects.get_or_create(name="Editor")
+        self.owner = User.objects.create_superuser(
+            username="owner", password="test-password", email="owner@example.com",
+        )
+        self.editor = User.objects.create_user(username="editor", password="test-password")
+        self.editor.groups.add(editor_group)
+        self.regular = User.objects.create_user(username="regular", password="test-password")
+        self.skill = Skill.objects.create(
+            title="Django Development", description="Backend web", category="hard",
+        )
+        self.list_url = reverse("api:skill-list")
+        self.detail_url = reverse("api:skill-detail", args=[self.skill.id])
+        self.star_url = reverse("api:skill-star", args=[self.skill.id])
+        self.payload = {
+            "title": "Teamwork", "description": "Collaboration skill",
+            "category": "soft", "thumbnail": "https://example.com/icon.png",
+        }
+
+    def as_user(self, user=None):
+        client = APIClient()
+        if user is not None:
+            client.force_authenticate(user)
+        return client
+
+    def test_public_list_and_detail(self):
+        response = self.client.get(self.list_url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data[0]["id"], str(self.skill.id))
+        self.assertEqual(response.data[0]["category_display"], "Hard Skill")
+        self.assertFalse(response.data[0]["is_starred"])
+        self.assertNotIn("fields", response.data[0])
+        self.assertEqual(self.client.get(self.detail_url).status_code, status.HTTP_200_OK)
+
+    def test_search_and_empty_results(self):
+        found = self.client.get(self.list_url, {"title": "DJANGO"})
+        self.assertEqual(len(found.data), 1)
+        empty = self.client.get(self.list_url, {"title": "not-found"})
+        self.assertEqual(empty.status_code, status.HTTP_200_OK)
+        self.assertEqual(empty.data, [])
+
+    def test_missing_skill(self):
+        url = reverse("api:skill-detail", args=[uuid.uuid4()])
+        self.assertEqual(self.client.get(url).status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_visitor_and_regular_cannot_write(self):
+        for user in (None, self.regular):
+            client = self.as_user(user)
+            self.assertEqual(client.post(self.list_url, self.payload, format="json").status_code, 403)
+            self.assertEqual(client.put(self.detail_url, self.payload, format="json").status_code, 403)
+            self.assertEqual(client.patch(self.detail_url, {"title": "X"}, format="json").status_code, 403)
+            self.assertEqual(client.delete(self.detail_url).status_code, 403)
+        self.assertEqual(Skill.objects.count(), 1)
+        self.skill.refresh_from_db()
+        self.assertEqual(self.skill.title, "Django Development")
+
+    def test_editor_can_update_but_not_create_or_delete(self):
+        client = self.as_user(self.editor)
+        self.assertEqual(client.patch(self.detail_url, {"title": "Diubah"}, format="json").status_code, 200)
+        self.assertEqual(client.put(self.detail_url, self.payload, format="json").status_code, 200)
+        self.skill.refresh_from_db()
+        self.assertEqual(self.skill.title, "Teamwork")
+        self.assertEqual(client.post(self.list_url, self.payload, format="json").status_code, 403)
+        self.assertEqual(client.delete(self.detail_url).status_code, 403)
+        self.assertEqual(Skill.objects.count(), 1)
+
+    def test_owner_can_create_update_and_delete(self):
+        client = self.as_user(self.owner)
+        created = client.post(self.list_url, self.payload, format="json")
+        self.assertEqual(created.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Skill.objects.count(), 2)
+        patched = client.patch(self.detail_url, {"title": "Python"}, format="json")
+        self.assertEqual(patched.status_code, status.HTTP_200_OK)
+        self.assertEqual(patched.data["title"], "Python")
+        self.assertEqual(client.delete(self.detail_url).status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Skill.objects.count(), 1)
+
+    def test_invalid_input_returns_400_and_is_not_saved(self):
+        client = self.as_user(self.owner)
+        cases = {
+            "title": {**self.payload, "title": "   "},
+            "title ": {**self.payload, "title": "<img src=x onerror=alert(1)>"},
+            "description": {**self.payload, "description": "<b></b>"},
+            "category": {**self.payload, "category": "bukan-kategori"},
+            "thumbnail": {**self.payload, "thumbnail": "javascript:alert(1)"},
+        }
+        for field, data in cases.items():
+            with self.subTest(field=field):
+                response = client.post(self.list_url, data, format="json")
+                self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+                self.assertIn(field.strip(), response.data)
+        self.assertEqual(Skill.objects.count(), 1)
+
+    def test_computed_fields_are_read_only(self):
+        client = self.as_user(self.owner)
+        response = client.post(self.list_url, {
+            **self.payload, "star_count": 99, "is_starred": True,
+            "starred_by_names": "forged", "category_display": "forged",
+        }, format="json")
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data["star_count"], 0)
+        self.assertFalse(response.data["is_starred"])
+        self.assertEqual(response.data["starred_by_names"], [])
+        self.assertEqual(response.data["category_display"], "Soft Skill")
+
+    def test_star_requires_login_and_toggles(self):
+        self.assertEqual(self.as_user().post(self.star_url).status_code, 403)
+        client = self.as_user(self.regular)
+        first = client.post(self.star_url)
+        self.assertEqual(first.status_code, status.HTTP_200_OK)
+        self.assertTrue(first.data["is_starred"])
+        self.assertEqual(first.data["star_count"], 1)
+        self.assertEqual(first.data["starred_by_names"], ["regular"])
+        second = client.post(self.star_url)
+        self.assertFalse(second.data["is_starred"])
+        self.assertEqual(self.skill.starred_by.count(), 0)
+
+    def test_wrong_method(self):
+        client = self.as_user(self.owner)
+        self.assertEqual(client.delete(self.list_url).status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(client.get(self.star_url).status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_session_write_requires_csrf(self):
+        client = APIClient(enforce_csrf_checks=True)
+        self.assertTrue(client.login(username="owner", password="test-password"))
+        response = client.post(self.list_url, self.payload, format="json")
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(Skill.objects.count(), 1)
+
+    def test_session_write_with_csrf_succeeds(self):
+        client = APIClient(enforce_csrf_checks=True)
+        self.assertTrue(client.login(username="owner", password="test-password"))
+        client.get(self.list_url, HTTP_ACCEPT="text/html")      # Browsable API menyetel cookie CSRF
+        token = client.cookies["csrftoken"].value
+        response = client.post(self.list_url, self.payload, format="json", HTTP_X_CSRFTOKEN=token)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Skill.objects.count(), 2)
