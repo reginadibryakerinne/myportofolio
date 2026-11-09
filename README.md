@@ -101,4 +101,47 @@ membantu menentukan commit message yang sesuai dengan perubahan yang saya buat p
 008 / 5 - Commit message yang tepat untuk fix isi dari ExperienceForms : https://chatgpt.com/s/p_6ac3b0b81000819192194a30ed9b7818
 membantu menentukan commit message yang sesuai dengan perubahan yang saya lakukan di ExperienceForms
 
+### Tugas 5
+1. REST (Representational State Transfer) adalah suatu pendekatan arsitektur dalam pembuatan API yang mengatur bagaimana client dan server berkomunikasi melalui HTTP. REST menggunakan resource sebagai pusat komunikasi, di mana setiap resource memiliki URL atau endpoint tersendiri dan dapat diakses menggunakan HTTP method seperti GET, POST, PUT, PATCH, dan DELETE.
 
+API yang mengembalikan JSON saja belum tentu disebut RESTful karena JSON hanya merupakan format pertukaran data. Sebuah API juga perlu menerapkan prinsip REST, seperti penggunaan resource yang jelas, HTTP method sesuai fungsinya, serta penggunaan status code HTTP yang tepat. Jadi, RESTful API tidak hanya dilihat dari format responsnya, tetapi juga dari cara API mengatur komunikasi antara client dan server.
+
+Perbedaan PUT dan PATCH terletak pada cara keduanya memperbarui data:
+- PUT digunakan untuk memperbarui keseluruhan data. Biasanya, client mengirimkan seluruh field yang diperlukan.
+- PATCH digunakan untuk memperbarui sebagian data saja. Client cukup mengirimkan field yang ingin diubah tanpa harus mengirimkan seluruh data.
+Contohnya, ketika ingin mengubah data skill yang memiliki judul, deskripsi, dan kategori:
+- Menggunakan PUT: client mengirimkan judul, deskripsi, dan kategori sekaligus.
+- Menggunakan PATCH: client hanya mengirimkan judul jika hanya bagian judul yang ingin diubah.
+
+2. Serializer pada Django REST Framework berfungsi untuk mengubah data dari model Django menjadi format yang dapat dikirimkan melalui API, seperti JSON. Selain itu, Serializer juga melakukan proses sebaliknya, yaitu menerima data dari client, memvalidasi data, kemudian mengubahnya menjadi data yang dapat disimpan ke database.
+
+Dibandingkan merakit dictionary secara manual menggunakan JsonResponse seperti pada Tutorial 05, serializer memiliki beberapa keuntungan:
+1. Validasi data: Serializer dapat memeriksa apakah data yang dikirimkan sudah sesuai dengan ketentuan sebelum disimpan.
+2. Konversi data otomatis: Serializer membantu mengubah objek model Django menjadi data yang dapat dikirimkan dalam format JSON.
+3. Mengurangi kode berulang: Kita tidak perlu menyusun dictionary secara manual untuk setiap field.
+4. Mengatur field yang dapat diubah: Kita dapat menentukan field yang hanya boleh dibaca (read-only) sehingga client tidak bisa sembarangan mengubahnya.
+Dengan demikian, penggunaan serializer membuat pengelolaan data API menjadi lebih terstruktur, konsisten, dan mudah dikembangkan.
+
+3. Autentikasi (authentication) adalah proses untuk memastikan identitas pengguna yang sedang mengakses API. Contohnya, ketika pengguna login menggunakan username dan password, sistem akan memeriksa apakah identitas tersebut benar. Sedangkan, otorisasi (authorization) adalah proses untuk menentukan tindakan apa saja yang boleh dilakukan oleh pengguna setelah identitasnya diketahui. Misalnya, pengguna biasa hanya boleh melihat data, sedangkan pemilik portfolio memiliki izin untuk menambah, mengubah, dan menghapus data.
+
+Pada Django REST Framework, autentikasi dapat diatur menggunakan authentication class, sedangkan hak akses dapat diatur menggunakan permission class.
+
+Pemeriksaan hak akses harus dilakukan di server menggunakan permission class karena menyembunyikan tombol pada template hanya memengaruhi UI. Pengguna masih dapat mengakses endpoint secara langsung melalui browser, Postman, atau cara lainnya. Dengan permission class, server tetap memeriksa apakah pengguna memiliki izin sebelum menjalankan suatu tindakan. Hal ini membuat keamanan API tidak hanya bergantung pada tampilan frontend.
+
+4. Django REST Framework yang menggunakan SessionAuthentication, identitas pengguna dikenali melalui session cookie yang disimpan oleh browser. Browser dapat mengirimkan cookie tersebut secara otomatis ketika mengakses server. Sehingga, permintaan yang mengubah data, seperti POST, PUT, PATCH, dan DELETE, tetap memerlukan token CSRF untuk memastikan bahwa permintaan tersebut benar-benar berasal dari sumber yang dipercaya.
+
+Token CSRF berfungsi sebagai lapisan perlindungan tambahan agar server dapat memeriksa validitas permintaan sebelum memproses perubahan.
+
+Sedangkan, force_authenticate pada pengujian DRF digunakan untuk membuat pengguna seolah-olah sudah terautentikasi tanpa melalui proses autentikasi session yang sebenarnya. Karena mekanisme ini melewati proses autentikasi normal, pengujian menggunakan force_authenticate tidak cukup untuk membuktikan bahwa perlindungan CSRF berjalan dengan baik.
+
+Untuk menguji CSRF, kita perlu menggunakan APIClient dengan enforce_csrf_checks=True. Dengan cara ini, kita dapat memastikan bahwa permintaan tanpa token CSRF ditolak oleh server, sedangkan permintaan dengan token CSRF yang valid dapat diproses.
+
+Dokumentasi & AI Disclosure:
+008 / 6 - Penentuan Permission dan Hak Akses pada Django REST Framework : https://chatgpt.com/s/t_6af1e6f350ec8191815adc21cbd020cc
+untuk membantu menentukan implementasi permission pada Django REST Framework, khususnya dalam membedakan hak akses antara Project dan Experience. AI memberikan saran penggunaan IsPortfolioOwnerOrReadOnly untuk Project dan IsPortfolioOwnerOrEditorOrReadOnly untuk Experience, serta membantu mengidentifikasi dan menghindari fungsi API yang duplikat agar implementasi lebih konsisten.
+
+009 / 6 - Penentuan Permission dan Hak Akses pada Django REST Framework : https://chatgpt.com/s/t_6af1e89850448191b8a76ad0ce41643b
+untuk membantu merancang tahapan implementasi Django REST Framework pada fitur Skill dengan mengikuti pola implementasi Experience yang telah dibuat sebelumnya. AI membantu menyusun alur pengerjaan mulai dari pembuatan serializer, API views, permission, URL routing, hingga API testing. AI juga memberikan panduan mengenai kode yang perlu diperiksa agar implementasi sesuai dengan struktur proyek yang sudah ada.
+
+010 / 6 - Penentuan Permission dan Hak Akses pada Django REST Framework : https://chatgpt.com/s/t_6af1e8f890408191b968031ed04d86d6
+ntuk membantu mengevaluasi dan menyempurnakan SkillAPITest agar sesuai dengan pola pengujian ProjectAPITest dan ketentuan implementasi Skill API. AI membantu mengidentifikasi aspek pengujian yang perlu diperhatikan, seperti permission Editor dan Owner, validasi input, CSRF, HTTP method, serta kesesuaian antara test dengan implementasi serializer, views, dan URL routing.
